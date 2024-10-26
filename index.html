@@ -165,7 +165,7 @@
         <div class="page" id="page2">
             <h1>🌟 Harapan Bahagia! 🌟</h1>
             <p>Semoga hari-harinya penuh dengan kebahagiaan dan canda tawa yaaa! 😄</p>
-            <img src="Balloons.png" alt="Balon" class="sticker"> <!-- Ganti menjadi Balon -->
+            <img src="Balloons.png" alt="Balon" class="sticker">
             <button class="button" onclick="nextPage()">Selanjutnya 🎁</button>
         </div>
 
@@ -188,7 +188,14 @@
             <h1>🎶  Putar Lagunyaa yaaa 🎶</h1>
             <p>Klik buatt mulaii musiknyaa! 🎵</p>
             <button class="button" onclick="playMusic()">Putar Musik 🎵</button>
+            <button class="button" onclick="stopMusic()">Stop Music 🚫</button>
+
             <button class="button" onclick="nextPage()">Lanjut </button>
+            <!-- Menambahkan video selfie -->
+            <audio id="birthdaySong" controls style="display:none;">
+                <source src="Jamrud - Selamat Ulang Tahun.mp3" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
         </div>
 
         <!-- Halaman 5 - Ucapan dari Teman -->
@@ -202,56 +209,49 @@
             </ul>
             <button class="button" onclick="nextPage()">Selanjutnya 🎈</button>
         </div>
-
-
         <div class="page" id="page6">
             <h1>🎊 I lovee youu sayanggkuu❤️! 🎊</h1>
             <p>Sekali lagi selamat ulang tahun yaa sayanggkuu 🎉</p>
-            <button class="button" onclick="endCelebration()">Akhiri 🌟</button> <!-- Tombol Akhiri -->
+            <button class="button" onclick="endCelebration()">Akhiri 🌟</button>
         </div>
-        
     </div>
 
-    <!-- Menambahkan video selfie -->
     <script>
-        let currentPage = 1;
-
-        function nextPage() {
-            document.getElementById('page' + currentPage).classList.remove('active');
-            currentPage++;
-            if (currentPage > 7) {
-                currentPage = 1;
-            }
-            document.getElementById('page' + currentPage).classList.add('active');
-        }
-
         function showFireworks() {
             const fireworks = document.getElementById('fireworks');
             fireworks.style.opacity = '1';
             setTimeout(() => {
                 fireworks.style.opacity = '0';
-            }, 1000);
+            }, 2000);
+        }
+
+        let currentPage = 1;
+
+        function nextPage() {
+            const currentPageElement = document.getElementById(`page${currentPage}`);
+            const nextPageElement = document.getElementById(`page${currentPage + 1}`);
+            if (nextPageElement) {
+                currentPageElement.classList.remove('active');
+                nextPageElement.classList.add('active');
+                currentPage++;
+            }
         }
 
         function playMusic() {
-            const audio = new Audio("C:\Users\A L I F\Downloads\Jamrud - Selamat Ulang Tahun (lyrics).mp3");
+            const audio = document.getElementById('birthdaySong');
             audio.play();
         }
 
-
-
-        function resetPage() {
-            currentPage = 1;
-            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-            document.getElementById('page' + currentPage).classList.add('active');
-            document.getElementById('guessResult').textContent = ''; // Reset hasil tebakan
+        function stopMusic() {
+            const audio = document.getElementById('birthdaySong');
+            audio.pause();
+            audio.currentTime = 0; // Reset music to the beginning
         }
 
         function endCelebration() {
-            alert("Happy Birthdayy!");
+            stopMusic(); // Stop music when ending the celebration
+            alert("Terima kasih sudah merayakan bersama kami!"); // Display thank you message
         }
-
-
     </script>
 </body>
 </html>
